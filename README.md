@@ -33,7 +33,9 @@ Add `lean.json` to your plugin or theme:
 - `pages`: paths to measure.
 - `budget`: the most each metric may grow, per page (bytes for `js`, `css` and `html`). Leave a key out for no limit.
 
-"Without" means the plugin deactivated for that request, or, for a theme, Twenty Twenty-Five.
+"Without" means the plugin deactivated for that request, or, for a theme, Twenty Twenty-Five on the same content. For themes, block styles of content that only your theme can render (its patterns, its blocks) count as added: read the CSS line as "theme plus the blocks it brings".
+
+Accessibility issues are compared by count per axe rule, so an issue WordPress itself already causes (for example the fallback page list inside an empty navigation menu) is not blamed on you. Give your blueprint a real menu and real content.
 
 ## Run
 

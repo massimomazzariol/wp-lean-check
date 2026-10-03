@@ -9,14 +9,23 @@ export const METRICS = [
 ];
 
 /**
- * Accessibility issues present with the plugin and absent without it, as "rule: target" strings.
+ * Accessibility issues the plugin adds, as "rule: target" strings. Compared by count per rule,
+ * not by selector: the same element can get a different selector when classes change order.
  *
  * @param {string[]} withIssues
  * @param {string[]} withoutIssues
  */
 export function addedIssues( withIssues, withoutIssues ) {
-	const before = new Set( withoutIssues );
-	return [ ...new Set( withIssues ) ].filter( ( issue ) => ! before.has( issue ) );
+	const rule = ( issue ) => issue.slice( 0, issue.indexOf( ':' ) );
+	const before = {};
+	for ( const issue of withoutIssues ) {
+		before[ rule( issue ) ] = ( before[ rule( issue ) ] || 0 ) + 1;
+	}
+	return withIssues.filter( ( issue ) => {
+		const left = before[ rule( issue ) ] || 0;
+		before[ rule( issue ) ] = left - 1;
+		return left <= 0;
+	} );
 }
 
 /**

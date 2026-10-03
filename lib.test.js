@@ -5,8 +5,12 @@ import { addedIssues, evaluate, report } from './lib.js';
 const without = { js: 1000, css: 2000, requests: 5, html: 9000 };
 const withIt = { js: 1000, css: 3100, requests: 5, html: 9500 };
 
-test( 'only issues that appear with the plugin count', () => {
-	assert.deepEqual( addedIssues( [ 'a: #x', 'b: #y', 'b: #y' ], [ 'a: #x' ] ), [ 'b: #y' ] );
+test( 'only issues that appear with the plugin count, compared per rule', () => {
+	assert.deepEqual( addedIssues( [ 'a: #x', 'b: #y' ], [ 'a: #x' ] ), [ 'b: #y' ] );
+	// Same violation, selector with classes in another order: not added.
+	assert.deepEqual( addedIssues( [ 'list: .a.b' ], [ 'list: .b.a' ] ), [] );
+	// One more occurrence of a rule than before: one added.
+	assert.deepEqual( addedIssues( [ 'list: .a', 'list: .c' ], [ 'list: .b' ] ), [ 'list: .c' ] );
 } );
 
 test( 'budget: added bytes within limits pass, over limits fail, missing keys are unlimited', () => {
