@@ -1,0 +1,26 @@
+{
+	"name": "wp-lean-check",
+	"version": "0.1.0",
+	"description": "How much does your WordPress plugin or theme add to a page, and does it add accessibility issues? Measured on WordPress Playground, checked against a budget.",
+	"license": "GPL-2.0-or-later",
+	"type": "module",
+	"bin": {
+		"wp-lean-check": "cli.js"
+	},
+	"files": [
+		"cli.js",
+		"lib.js",
+		"lean-toggle.php"
+	],
+	"scripts": {
+		"test": "node --test"
+	},
+	"engines": {
+		"node": ">=20"
+	},
+	"dependencies": {
+		"@wp-playground/cli": "^3.1.56",
+		"axe-core": "^4.13.0",
+		"playwright": "^1.63.0"
+	}
+}

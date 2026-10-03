@@ -1,0 +1,24 @@
+name: wp-lean-check
+description: Measure the JavaScript, CSS, requests, markup and accessibility issues your WordPress plugin or theme adds to a page, against a budget.
+branding:
+  icon: feather
+  color: green
+inputs:
+  dir:
+    description: Plugin or theme directory (contains lean.json).
+    default: .
+  config:
+    description: Config file name, relative to dir.
+    default: lean.json
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 22
+    - shell: bash
+      run: |
+        npm ci --prefix "$GITHUB_ACTION_PATH" --omit=dev --no-audit --no-fund
+        npx --prefix "$GITHUB_ACTION_PATH" playwright install --with-deps chromium
+    - shell: bash
+      run: node "$GITHUB_ACTION_PATH/cli.js" --dir "${{ inputs.dir }}" --config "${{ inputs.config }}"
