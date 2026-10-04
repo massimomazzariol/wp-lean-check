@@ -91,4 +91,4 @@ Sizes are uncompressed bytes as the browser receives them. Numbers use the Europ
 
 ## License
 
-GPL-2.0-or-later.
+GPL-2.0-or-later. Copyright 2026 Massimo Mazzariol, [https://github.com/massimomazzariol/wp-lean-check](https://github.com/massimomazzariol/wp-lean-check). If you reuse the code, keep the copyright notice.
