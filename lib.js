@@ -1,12 +1,30 @@
 // Pure logic: what a page weighs, what the plugin or theme adds, and whether that fits the budget.
 
+// [ key, label, unit ]: byte metrics are shown with " B".
 export const METRICS = [
-	[ 'js', 'JavaScript (bytes)' ],
-	[ 'css', 'CSS (bytes)' ],
-	[ 'requests', 'Requests' ],
-	[ 'html', 'Markup (bytes)' ],
-	[ 'a11y', 'Accessibility issues' ],
+	[ 'js', 'JavaScript', ' B' ],
+	[ 'css', 'CSS', ' B' ],
+	[ 'requests', 'Requests', '' ],
+	[ 'html', 'Markup', ' B' ],
+	[ 'a11y', 'Accessibility issues', '' ],
 ];
+
+// European number format: dot between thousands, also for four-digit numbers (1.234).
+const NUMBER = new Intl.NumberFormat( 'it-IT', { useGrouping: 'always' } );
+
+/**
+ * A number in European format with its unit, optionally signed ("+2.690 B").
+ *
+ * @param {number|null} value
+ * @param {string} unit
+ * @param {boolean} signed
+ */
+export function formatNumber( value, unit = '', signed = false ) {
+	if ( null === value ) {
+		return '';
+	}
+	return ( signed && value > 0 ? '+' : '' ) + NUMBER.format( value ) + unit;
+}
 
 /**
  * Accessibility issues the plugin adds, as "rule: target" strings. Compared by count per rule,
@@ -38,12 +56,13 @@ export function addedIssues( withIssues, withoutIssues ) {
  * @param {Record<string, number>} budget
  */
 export function evaluate( withIt, without, issues, budget = {} ) {
-	return METRICS.map( ( [ key, label ] ) => {
+	return METRICS.map( ( [ key, label, unit ] ) => {
 		const added = 'a11y' === key ? issues.length : withIt[ key ] - without[ key ];
 		const limit = budget[ key ];
 		return {
 			key,
 			label,
+			unit,
 			without: 'a11y' === key ? null : without[ key ],
 			with: 'a11y' === key ? null : withIt[ key ],
 			added,
@@ -60,21 +79,21 @@ export function evaluate( withIt, without, issues, budget = {} ) {
  * @param {string} name Plugin or theme slug.
  */
 export function report( pages, name ) {
-	const show = ( value ) => ( null === value ? '' : String( value ) );
 	const lines = [ `## wp-lean-check: ${ name }`, '' ];
 	let pass = true;
 	for ( const page of pages ) {
 		lines.push( `### \`${ page.path }\``, '', '| Metric | Without | With | Added | Budget | |', '| --- | ---: | ---: | ---: | ---: | --- |' );
 		for ( const row of page.rows ) {
 			pass = pass && row.ok;
-			const added = 'a11y' === row.key ? row.added : `${ row.added > 0 ? '+' : '' }${ row.added }`;
-			lines.push( `| ${ row.label } | ${ show( row.without ) } | ${ show( row.with ) } | ${ added } | ${ show( row.limit ) } | ${ row.ok ? 'pass' : '**over**' } |` );
+			const added = formatNumber( row.added, row.unit, 'a11y' !== row.key );
+			const cells = [ row.label, formatNumber( row.without, row.unit ), formatNumber( row.with, row.unit ), `**${ added }**`, formatNumber( row.limit, row.unit ), row.ok ? '✅ pass' : '❌ over' ];
+			lines.push( `| ${ cells.join( ' | ' ) } |` );
 		}
 		if ( page.issues.length ) {
 			lines.push( '', 'Accessibility issues added:', '', ...page.issues.map( ( issue ) => `- ${ issue }` ) );
 		}
 		lines.push( '' );
 	}
-	lines.push( pass ? 'Result: **pass**' : 'Result: **over budget**' );
+	lines.push( pass ? 'Result: ✅ **within budget**' : 'Result: ❌ **over budget**' );
 	return { text: lines.join( '\n' ), pass };
 }

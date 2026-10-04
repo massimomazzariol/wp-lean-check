@@ -1,6 +1,6 @@
 {
 	"name": "wp-lean-check",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"description": "How much does your WordPress plugin or theme add to a page, and does it add accessibility issues? Measured on WordPress Playground, checked against a budget.",
 	"license": "GPL-2.0-or-later",
 	"type": "module",
