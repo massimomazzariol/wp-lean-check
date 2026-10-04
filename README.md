@@ -5,7 +5,7 @@
 [![GitHub Action](https://img.shields.io/badge/GitHub%20Action-uses%3A%20wp--lean--check%40v0-2088ff?logo=githubactions&logoColor=white)](#github-actions)
 [![WordPress Playground](https://img.shields.io/badge/runs%20on-WordPress%20Playground-3858e9?logo=wordpress)](https://wordpress.org/playground/)
 [![axe-core](https://img.shields.io/badge/accessibility-axe--core%20WCAG%202.2%20AA-663399)](https://github.com/dequelabs/axe-core)
-[![License: GPL v2+](https://img.shields.io/badge/license-GPL--2.0--or--later-blue)](LICENSE)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE)
 
 **What does your WordPress plugin or theme add to a page, and does it add accessibility issues?**
 
@@ -91,4 +91,4 @@ Sizes are uncompressed bytes as the browser receives them. Numbers use the Europ
 
 ## License
 
-GPL-2.0-or-later. Copyright 2026 Massimo Mazzariol, [https://github.com/massimomazzariol/wp-lean-check](https://github.com/massimomazzariol/wp-lean-check). If you reuse the code, keep the copyright notice.
+Apache-2.0. Copyright 2026 Massimo Mazzariol, [https://github.com/massimomazzariol/wp-lean-check](https://github.com/massimomazzariol/wp-lean-check). If you reuse or redistribute it, keep the [NOTICE](NOTICE) file: that is how you credit the original project.

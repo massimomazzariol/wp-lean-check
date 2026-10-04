@@ -2,7 +2,7 @@
 	"name": "wp-lean-check",
 	"version": "0.2.0",
 	"description": "How much does your WordPress plugin or theme add to a page, and does it add accessibility issues? Measured on WordPress Playground, checked against a budget.",
-	"license": "GPL-2.0-or-later",
+	"license": "Apache-2.0",
 	"type": "module",
 	"bin": {
 		"wp-lean-check": "cli.js"
@@ -10,7 +10,8 @@
 	"files": [
 		"cli.js",
 		"lib.js",
-		"lean-toggle.php"
+		"lean-toggle.php",
+		"NOTICE"
 	],
 	"scripts": {
 		"test": "node --test"

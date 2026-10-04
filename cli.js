@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Copyright 2026 Massimo Mazzariol - https://github.com/massimomazzariol/wp-lean-check (GPL-2.0-or-later).
+// Copyright 2026 Massimo Mazzariol - https://github.com/massimomazzariol/wp-lean-check (Apache-2.0, see NOTICE).
 // wp-lean-check: boots WordPress Playground with your plugin or theme, loads each page with and
 // without it, and reports the bytes, requests and accessibility issues it adds against a budget.
 
